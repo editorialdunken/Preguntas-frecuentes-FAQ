@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preguntas Frecuentes · Editorial Dunken</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#004aad;--azul-osc:#003c8f;--azul-claro:#0a59c4;
+    --naranja:#f88f38;--naranja-osc:#d8730f;
+    --naranja-suave:#fdeddc;--naranja-claro:#fef5ea;
+    --azul-suave:#e9f0fa;--azul-medio:#c6d6ee;
+    --crema:#f5f6f8;--papel:#ffffff;
+    --tinta:#1c2433;--gris:#5d6675;--linea:#e6e9ef;
+    --sombra:0 16px 46px -18px rgba(0,40,90,.26);
+    --sombra-sm:0 7px 22px -10px rgba(0,40,90,.2);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Open Sans',sans-serif;color:var(--tinta);background:var(--crema);line-height:1.62;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--naranja);color:#fff;}
+  a{color:var(--azul);}
+
+  /* HERO */
+  .hero{position:relative;background:linear-gradient(158deg,#003c8f 0%,#004aad 52%,#0a59c4 100%);color:#fff;padding:60px 24px 130px;overflow:hidden;text-align:center;}
+  .blob{position:absolute;border-radius:50%;pointer-events:none;}
+  .blob.b1{width:360px;height:360px;background:radial-gradient(circle,rgba(248,143,56,.26),transparent 70%);top:-140px;right:-110px;}
+  .blob.b2{width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 70%);bottom:-110px;left:-80px;}
+  .float-el{position:absolute;opacity:.5;animation:bob 6.5s ease-in-out infinite;}
+  .float-el.f1{top:54px;left:9%;animation-delay:0s;}
+  .float-el.f2{bottom:120px;right:10%;animation-delay:2s;}
+  .float-el.f3{top:120px;right:14%;animation-delay:3.8s;}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-7deg);}50%{transform:translateY(-13px) rotate(3deg);}}
+  .hero-inner{position:relative;max-width:740px;margin:0 auto;z-index:3;}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.42);border-radius:40px;padding:7px 18px 7px 14px;font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;font-weight:600;margin-bottom:24px;}
+  .badge svg{width:15px;height:15px;}
+  .hero h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.3rem,6vw,3.7rem);line-height:1.08;margin-bottom:16px;}
+  .hero h1 em{color:#ffd9b3;font-style:italic;text-decoration:underline;text-decoration-color:rgba(248,143,56,.6);text-underline-offset:6px;text-decoration-thickness:3px;}
+  .hero .lead{font-size:clamp(1rem,2.3vw,1.16rem);color:#d7e3f5;max-width:540px;margin:0 auto 26px;}
+  /* BUSCADOR */
+  .search-box{position:relative;max-width:520px;margin:0 auto;}
+  .search-box svg.s-ico{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:21px;height:21px;color:var(--gris);}
+  #search{width:100%;border:none;border-radius:14px;padding:16px 46px 16px 48px;font-family:'Open Sans',sans-serif;font-size:1rem;color:var(--tinta);box-shadow:0 12px 30px -10px rgba(0,30,70,.4);}
+  #search:focus{outline:3px solid rgba(248,143,56,.55);}
+  #clearBtn{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:26px;height:26px;border:none;border-radius:50%;background:var(--linea);color:var(--gris);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1rem;line-height:1;}
+  #clearBtn.show{display:flex;}
+  .hero-mark{margin-top:22px;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.66);}
+
+  /* LAYOUT */
+  .wrap{max-width:900px;margin:-80px auto 0;padding:0 20px 80px;position:relative;z-index:5;}
+  .card{background:var(--papel);border-radius:22px;box-shadow:var(--sombra);padding:40px 38px;margin-bottom:24px;border:1px solid var(--linea);}
+
+  /* RESULTADO BÚSQUEDA */
+  .search-status{display:none;background:var(--naranja-suave);border:1px solid #f3cda0;border-radius:14px;padding:14px 18px;margin-bottom:22px;font-size:.93rem;color:#7a4a14;}
+  .search-status.show{display:block;}
+  .search-status b{color:var(--naranja-osc);}
+  .no-results{display:none;text-align:center;padding:40px 20px;color:var(--gris);}
+  .no-results.show{display:block;}
+  .no-results svg{width:48px;height:48px;color:var(--azul-medio);margin-bottom:12px;}
+  .no-results h3{font-family:'Fraunces',serif;color:var(--tinta);margin-bottom:6px;}
+
+  /* TEMAS / SECCIONES */
+  .tema-head{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+  .tema-ico{flex-shrink:0;width:50px;height:50px;border-radius:14px;background:var(--naranja-suave);display:flex;align-items:center;justify-content:center;}
+  .tema-ico svg{width:27px;height:27px;}
+  .tema-eyebrow{font-size:.71rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--naranja-osc);}
+  .tema-head h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.35rem,3vw,1.7rem);color:var(--azul);line-height:1.16;}
+  .tema-sub{color:var(--gris);font-size:.96rem;margin:8px 0 18px;}
+
+  /* FAQ ITEMS */
+  details{border:1px solid var(--linea);border-radius:13px;margin-bottom:9px;overflow:hidden;background:var(--papel);transition:border-color .18s;}
+  details[open]{border-color:var(--naranja);box-shadow:var(--sombra-sm);}
+  summary{cursor:pointer;padding:16px 19px;font-weight:600;color:var(--tinta);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px;font-size:.96rem;}
+  summary::-webkit-details-marker{display:none;}
+  summary:hover{color:var(--naranja-osc);}
+  .qmark{flex-shrink:0;width:25px;height:25px;border-radius:7px;background:var(--naranja-suave);color:var(--naranja-osc);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.15rem;transition:transform .22s,background .22s;}
+  details[open] .qmark{transform:rotate(45deg);background:var(--naranja);color:#fff;}
+  .answer{padding:0 19px 17px;color:var(--gris);font-size:.92rem;}
+  .answer p{margin-bottom:8px;}
+  .answer p:last-child{margin-bottom:0;}
+  .answer a{font-weight:600;}
+  mark{background:#ffe08a;color:inherit;padding:0 2px;border-radius:3px;}
+  .hidden{display:none !important;}
+
+  /* MANUALES */
+  .manuales-card{background:linear-gradient(155deg,#003c8f,#0a59c4);border-radius:22px;padding:38px 36px;margin-bottom:24px;box-shadow:var(--sombra);color:#fff;position:relative;overflow:hidden;}
+  .manuales-card .mc-blob{position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(248,143,56,.28),transparent 70%);top:-100px;right:-80px;}
+  .manuales-card .mc-head{position:relative;z-index:2;margin-bottom:6px;}
+  .manuales-card .mc-eyebrow{font-size:.71rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#ffd9b3;margin-bottom:4px;}
+  .manuales-card h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.4rem,3.2vw,1.85rem);color:#fff;}
+  .manuales-card .mc-sub{color:#d7e3f5;font-size:.95rem;margin:8px 0 20px;position:relative;z-index:2;}
+  .manuales-list{display:grid;gap:10px;position:relative;z-index:2;}
+  .manual-link{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:15px 17px;text-decoration:none;transition:background .16s,transform .16s;}
+  .manual-link:hover{background:rgba(255,255,255,.2);transform:translateX(4px);}
+  .manual-link .ml-num{flex-shrink:0;width:38px;height:38px;border-radius:11px;background:rgba(248,143,56,.9);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;}
+  .manual-link .ml-txt{flex:1;}
+  .manual-link .ml-txt b{display:block;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:1.02rem;}
+  .manual-link .ml-txt span{font-size:.84rem;color:#c2d2ea;}
+  .manual-link .ml-arrow{flex-shrink:0;width:20px;height:20px;color:#ffd9b3;}
+
+  /* INTRO */
+  .intro-banner{display:flex;gap:16px;align-items:center;background:linear-gradient(135deg,var(--naranja-suave),#fff);border:1px solid #f3cda0;border-radius:16px;padding:20px 22px;margin-top:4px;}
+  .intro-banner .ib-ico{flex-shrink:0;width:54px;height:54px;border-radius:50%;background:#fff;border:2px solid var(--naranja);display:flex;align-items:center;justify-content:center;}
+  .intro-banner .ib-ico svg{width:28px;height:28px;}
+  .intro-banner p{margin:0;font-size:.95rem;}
+  .intro-banner p b{font-family:'Fraunces',serif;color:var(--naranja-osc);}
+  .intro-text{font-size:1.05rem;color:#39414f;line-height:1.7;margin-bottom:4px;}
+  .intro-text .hl{color:var(--azul);font-weight:600;}
+
+  /* CONTACTO FINAL */
+  .contacto-final{background:linear-gradient(155deg,#003c8f,#0a59c4);border:none;text-align:center;color:#fff;position:relative;overflow:hidden;}
+  .contacto-final .blob{opacity:.7;}
+  .contacto-final .cf-ico{width:62px;height:62px;border-radius:17px;margin:0 auto 16px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
+  .contacto-final .cf-ico svg{width:32px;height:32px;}
+  .contacto-final h2{font-family:'Fraunces',serif;font-weight:600;color:#fff;font-size:clamp(1.5rem,3.6vw,2rem);position:relative;z-index:2;}
+  .contacto-final p{color:#d7e3f5;position:relative;z-index:2;max-width:520px;margin:13px auto 20px;font-size:.97rem;}
+  .cf-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2;}
+  .cf-btn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:.93rem;padding:13px 22px;border-radius:12px;transition:transform .16s;}
+  .cf-btn:hover{transform:translateY(-2px);}
+  .cf-btn.wa{background:linear-gradient(145deg,#25d366,#1aa851);color:#fff;box-shadow:0 6px 18px -8px rgba(37,211,102,.7);}
+  .cf-btn.mail{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.4);}
+  .cf-btn svg{width:18px;height:18px;}
+
+  /* FOOTER */
+  footer{text-align:center;padding:28px 20px 44px;color:var(--gris);font-size:.83rem;}
+  footer .logo{font-family:'Fraunces',serif;font-weight:700;color:var(--azul);font-size:1rem;}
+
+  @media(max-width:680px){
+    .card,.manuales-card{padding:30px 22px;}
+    .hero{padding:50px 20px 120px;}
+    .float-el{display:none;}
+    .tema-head{gap:11px;}
+    .tema-ico{width:44px;height:44px;}
+    .intro-banner{flex-direction:column;text-align:center;}
+    .cf-btns{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+  <svg class="float-el f1" width="46" height="46" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.6"/><path d="M9.5 9.5a2.5 2.5 0 014.5 1.5c0 1.7-2.5 2-2.5 3.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17" r="1.1" fill="#fff"/></svg>
+  <svg class="float-el f2" width="42" height="42" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="1.6"/><path d="M16 16l5 5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+  <svg class="float-el f3" width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 3c4 2 6 6 6 11l-3 3H9l-3-3c0-5 2-9 6-11z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+
+  <div class="hero-inner">
+    <span class="badge">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.8"/><path d="M9.5 9.5a2.5 2.5 0 014.5 1.5c0 1.7-2.5 2-2.5 3.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Centro de ayuda · Preguntas frecuentes
+    </span>
+    <h1>¿Tenés una <em>duda</em>? Empezá por acá</h1>
+    <p class="lead">Reunimos las preguntas que más nos hacen los autores. Buscá la tuya o explorá por temas.</p>
+    <div class="search-box">
+      <svg class="s-ico" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="text" id="search" placeholder="Buscá tu pregunta: ISBN, regalías, feria…" autocomplete="off">
+      <button id="clearBtn" aria-label="Limpiar búsqueda">✕</button>
+    </div>
+    <div class="hero-mark">Editorial Dunken · 30 años junto al autor independiente</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section class="card" id="introCard">
+    <p class="intro-text">Publicar un libro trae muchas preguntas, y está perfecto que así sea. En esta guía juntamos las <span class="hl">dudas más comunes de los autores</span>, ordenadas por tema. Usá el buscador de arriba para encontrar la tuya al instante, o recorré las secciones con calma.</p>
+    <div class="intro-banner">
+      <div class="ib-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M8 10h8M8 14h5" stroke="#d8730f" stroke-width="2" stroke-linecap="round"/><path d="M21 12a9 9 0 11-3.5-7.1L21 4v5h-5" stroke="#d8730f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <p><b>¿Buscás algo más específico?</b> Para cada etapa de tu libro tenemos un manual completo y dedicado. Más abajo vas a encontrar el índice con los cinco — son la guía detallada de todo el recorrido.</p>
+    </div>
+  </section>
+
+  <!-- ÍNDICE DE MANUALES -->
+  <section class="manuales-card" id="manualesCard">
+    <span class="mc-blob"></span>
+    <div class="mc-head">
+      <div class="mc-eyebrow">📚 La guía completa del autor</div>
+      <h2>Los manuales del recorrido</h2>
+    </div>
+    <p class="mc-sub">Tu libro pasa por varias etapas, y cada una tiene su manual. Si tu duda es de un momento puntual, andá directo a la guía que corresponde.</p>
+    <div class="manuales-list">
+      <a class="manual-link" href="https://editorialdunken.github.io/manual-de-bienvenida/" target="_blank" rel="noopener">
+        <div class="ml-num">1</div>
+        <div class="ml-txt"><b>Manual de bienvenida</b><span>Apenas hacés tu orden: cómo es el recorrido completo</span></div>
+        <svg class="ml-arrow" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="manual-link" href="https://editorialdunken.github.io/envio-de-material-de-tu-libro/" target="_blank" rel="noopener">
+        <div class="ml-num">2</div>
+        <div class="ml-txt"><b>Envío del material de tu libro</b><span>Cómo preparar y enviar el interior y la tapa</span></div>
+        <svg class="ml-arrow" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="manual-link" href="https://editorialdunken.github.io/manual-correcion-y-autorizacion/" target="_blank" rel="noopener">
+        <div class="ml-num">3</div>
+        <div class="ml-txt"><b>Corrección y autorización</b><span>Galeras, cómo corregir y la autorización final</span></div>
+        <svg class="ml-arrow" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="manual-link" href="https://editorialdunken.github.io/manual-panel-de-autor/" target="_blank" rel="noopener">
+        <div class="ml-num">4</div>
+        <div class="ml-txt"><b>Panel de Autor</b><span>Cómo usar tu espacio personal: seguimiento y ventas</span></div>
+        <svg class="ml-arrow" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="manual-link" href="https://editorialdunken.github.io/Tu-libro-casi-esta-listo-y-ahora-que-/" target="_blank" rel="noopener">
+        <div class="ml-num">5</div>
+        <div class="ml-txt"><b>Tu libro casi está listo: ¿y ahora qué?</b><span>Distribución, ventas, difusión, ferias y eventos</span></div>
+        <svg class="ml-arrow" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ESTADO DE BÚSQUEDA -->
+  <div class="search-status" id="searchStatus"></div>
+
+  <!-- TEMA 1: PUBLICAR CON DUNKEN -->
+  <section class="card faq-section" id="t1">
+    <div class="tema-head">
+      <div class="tema-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5C9 3 5 3 3 4v14c2-1 6-1 9 1 3-2 7-2 9-1V4c-2-1-6-1-9 1z" stroke="#d8730f" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 5v15" stroke="#d8730f" stroke-width="1.7"/></svg></div>
+      <div><div class="tema-eyebrow">Tema 1</div><h2>Publicar con Dunken</h2></div>
+    </div>
+    <p class="tema-sub">Cómo funciona el modelo de autor independiente, los derechos y el ISBN.</p>
+
+    <details class="faq"><summary>¿Qué significa publicar como autor independiente?<span class="qmark">+</span></summary><div class="answer"><p>Significa que vos sos el dueño de tu obra y quien financia la edición. Dunken te acompaña con toda su estructura —diseño, impresión, distribución, difusión— pero las decisiones y los derechos son tuyos. Es un modelo de acompañamiento: no te quitamos el control de tu libro ni un porcentaje de tus derechos.</p></div></details>
+
+    <details class="faq"><summary>¿A quién pertenecen los derechos de mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Los derechos de autor te pertenecen íntegramente a vos. No tenés ningún compromiso con Editorial Dunken: podés imprimir tu libro con otra entidad, en cualquier momento, sin pedir autorización. Dunken solo tramita el ISBN bajo su sello, y eso no implica compartir ningún derecho sobre tu obra.</p></div></details>
+
+    <details class="faq"><summary>¿Qué es el ISBN y para qué sirve?<span class="qmark">+</span></summary><div class="answer"><p>El ISBN es un identificador internacional de publicaciones que clasifica las obras por título, editor y características de la edición. Todos los libros publicados en el país deben llevarlo, y debe figurar en las primeras páginas. La editorial se encarga de tramitarlo bajo el sello Dunken como parte del servicio de edición.</p></div></details>
+
+    <details class="faq"><summary>¿El eBook necesita un ISBN distinto al del libro impreso?<span class="qmark">+</span></summary><div class="answer"><p>Sí. Cada formato de publicación —impreso y digital— requiere su propio ISBN. Son ediciones distintas y por eso llevan identificadores separados.</p></div></details>
+
+    <details class="faq"><summary>¿Cuál es la tirada mínima para publicar?<span class="qmark">+</span></summary><div class="answer"><p>La tirada mínima en Dunken es de 100 ejemplares. La cantidad que imprimas conviene pensarla con realismo: una tirada más grande abarata el costo por ejemplar, pero implica más inversión, y la venta de libros lleva su tiempo.</p></div></details>
+
+    <details class="faq"><summary>¿Puedo hacer una nueva edición o reimpresión más adelante?<span class="qmark">+</span></summary><div class="answer"><p>Sí. Podés hacer una reedición de tu libro cuando lo necesites, actualizando contenido, diseño o precio. Las reediciones tienen un 30% de descuento. Para coordinarla, contactá al equipo de la editorial.</p></div></details>
+
+    <details class="faq"><summary>¿La editorial corrige o cambia el contenido de mi libro?<span class="qmark">+</span></summary><div class="answer"><p>No. Dunken diagrama, diseña e imprime tu obra, pero no altera su contenido. Sobre el archivo se hace una limpieza técnica, pero las decisiones sobre el texto son tuyas. Si querés una corrección literaria profesional, es un servicio aparte que podés consultar.</p></div></details>
+  </section>
+
+  <!-- TEMA 2: PROCESO Y TIEMPOS -->
+  <section class="card faq-section" id="t2">
+    <div class="tema-head">
+      <div class="tema-ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="#d8730f" stroke-width="1.7"/><path d="M12 9v4l3 2" stroke="#d8730f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2h6" stroke="#d8730f" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div><div class="tema-eyebrow">Tema 2</div><h2>El proceso y los tiempos</h2></div>
+    </div>
+    <p class="tema-sub">Las etapas de tu libro y cuánto puede llevar cada una.</p>
+
+    <details class="faq"><summary>¿Cuáles son las etapas del proceso de publicación?<span class="qmark">+</span></summary><div class="answer"><p>A grandes rasgos: contratás tu orden, enviás el material, tu libro se diagrama, revisás las galeras y corregís, autorizás la versión final, se imprime y encuaderna, y por último entra en distribución y venta. El Manual de bienvenida tiene el recorrido completo paso a paso.</p></div></details>
+
+    <details class="faq"><summary>¿Cuánto tarda todo el proceso?<span class="qmark">+</span></summary><div class="answer"><p>Depende mucho de cada libro y, sobre todo, de la etapa de corrección. Una vez autorizada la versión final, la impresión y encuadernación llevan su tiempo. La etapa de galeras es la que más puede estirar los plazos, porque depende del ida y vuelta de correcciones. Te pedimos paciencia: cada libro avanza a su ritmo.</p></div></details>
+
+    <details class="faq"><summary>¿Hay un plazo para autorizar mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Sí. El autor se compromete a entregar y autorizar el material completo —interior y tapa— dentro de un plazo desde la firma de la orden. Superado ese plazo sin autorización, los valores pueden actualizarse según la lista de precios vigente. Por eso conviene mantener un buen ritmo en las correcciones.</p></div></details>
+
+    <details class="faq"><summary>¿Por qué me contactan distintas personas de la editorial?<span class="qmark">+</span></summary><div class="answer"><p>Es normal: cada área tiene su función. Según la etapa de tu libro, pueden escribirte desde diseño, distribución, prensa, etc. No todas las respuestas son inmediatas, porque se atienden muchos proyectos en simultáneo, pero cada consulta llega a quien corresponde.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo sigo el avance de mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Desde tu Panel de Autor. Es tu herramienta principal de seguimiento: ahí ves en qué etapa está tu libro y cómo avanza. El Manual del Panel de Autor te explica cómo usarlo en detalle.</p></div></details>
+  </section>
+
+  <!-- TEMA 3: MATERIAL Y CORRECCIÓN -->
+  <section class="card faq-section" id="t3">
+    <div class="tema-head">
+      <div class="tema-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19l7-7-4-4-7 7v4h4z" stroke="#d8730f" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 6l2-2 4 4-2 2" stroke="#d8730f" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+      <div><div class="tema-eyebrow">Tema 3</div><h2>Tu material y la corrección</h2></div>
+    </div>
+    <p class="tema-sub">Cómo presentar tu obra y cómo funciona la revisión de galeras.</p>
+
+    <details class="faq"><summary>¿Cómo tengo que presentar el material de mi libro?<span class="qmark">+</span></summary><div class="answer"><p>El interior conviene enviarlo en un único archivo digital con todo el contenido en el orden correcto. Para la tapa hace falta el material gráfico, la sinopsis y una breve biografía del autor. El Manual de envío del material te explica en detalle cómo preparar y mandar cada parte.</p></div></details>
+
+    <details class="faq"><summary>¿Qué es una galera?<span class="qmark">+</span></summary><div class="answer"><p>La galera es una versión de prueba de tu libro ya diagramado. Sirve para que revises cómo quedó, detectes errores y marques los cambios que quieras antes de la impresión. No es la versión final: es tu oportunidad de ajustar todo. El Manual de corrección y autorización lo explica a fondo.</p></div></details>
+
+    <details class="faq"><summary>¿Cuántas veces puedo corregir mi libro?<span class="qmark">+</span></summary><div class="answer"><p>El ida y vuelta de galeras se repite las veces que haga falta hasta que el libro quede como querés. La primera prueba suele ser la que más correcciones tiene. Lo importante es enviar todas las correcciones juntas en cada ronda y mantener un buen ritmo.</p></div></details>
+
+    <details class="faq"><summary>¿La editorial revisa la ortografía de mi texto?<span class="qmark">+</span></summary><div class="answer"><p>Sobre el archivo se hace una limpieza técnica, pero no se corrige ni se cambia el contenido de la obra. Si querés una revisión literaria profunda, podés contratar un corrector profesional. Consultá esa opción con la editorial.</p></div></details>
+
+    <details class="faq"><summary>¿Puedo cambiar algo después de autorizar la impresión?<span class="qmark">+</span></summary><div class="answer"><p>No. Una vez dada la autorización final, el archivo va a imprenta tal como está y no se pueden hacer cambios en esa edición. Por eso es clave revisar todo con atención antes de dar el OK definitivo.</p></div></details>
+  </section>
+
+  <!-- TEMA 4: FORMATOS -->
+  <section class="card faq-section" id="t4">
+    <div class="tema-head">
+      <div class="tema-ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="13" height="16" rx="2" stroke="#d8730f" stroke-width="1.7"/><path d="M19 8v12a2 2 0 01-2 2H7" stroke="#d8730f" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+      <div><div class="tema-eyebrow">Tema 4</div><h2>Formatos: físico y digital</h2></div>
+    </div>
+    <p class="tema-sub">Las opciones para publicar tu libro más allá del papel.</p>
+
+    <details class="faq"><summary>¿En qué formatos puedo publicar mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Dunken trabaja en formato físico y digital. El formato digital incluye eBook, audiolibro y flipbook (un libro digital interactivo que simula pasar las páginas).</p></div></details>
+
+    <details class="faq"><summary>¿Qué incluye el paquete digital?<span class="qmark">+</span></summary><div class="answer"><p>El paquete digital contempla la publicación de tu libro en plataformas como Amazon Kindle y Google Books, además de la plataforma propia de la editorial. Permite que tu obra esté disponible las 24 horas y amplíes tu alcance a lectores de cualquier lado.</p></div></details>
+
+    <details class="faq"><summary>¿La editorial graba el audiolibro?<span class="qmark">+</span></summary><div class="answer"><p>Sí, hay un servicio de grabación de audiolibro con locutores profesionales. Es un servicio que se cotiza aparte; consultá con la editorial los detalles y opciones de voz.</p></div></details>
+
+    <details class="faq"><summary>¿Puedo publicar solo en digital, o solo en una plataforma?<span class="qmark">+</span></summary><div class="answer"><p>Sí. Podés elegir publicar solo en formato digital, e incluso limitarte a una sola plataforma si preferís acotar tu presencia digital. Las opciones se arman según lo que necesites.</p></div></details>
+
+    <details class="faq"><summary>¿El formato digital afecta las ventas del libro físico?<span class="qmark">+</span></summary><div class="answer"><p>Al contrario: ofrecer varios formatos suele ampliar tu audiencia, porque hay lectores que prefieren el digital y otros el papel. Son públicos distintos que se complementan.</p></div></details>
+  </section>
+
+  <!-- TEMA 5: VENTAS Y LIQUIDACIONES -->
+  <section class="card faq-section" id="t5">
+    <div class="tema-head">
+      <div class="tema-ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#d8730f" stroke-width="1.7"/><path d="M12 7v10M14.5 9.5a2.5 2 0 00-5 .3c0 2.7 5 1.5 5 4.2a2.5 2 0 01-5 .3" stroke="#d8730f" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+      <div><div class="tema-eyebrow">Tema 5</div><h2>Ventas, regalías y liquidaciones</h2></div>
+    </div>
+    <p class="tema-sub">Cómo ganás con tu libro y cómo cobrás lo que se vende.</p>
+
+    <details class="faq"><summary>¿Cuánto gano por cada libro vendido?<span class="qmark">+</span></summary><div class="answer"><p>Depende del canal. Si vendés por tu cuenta, el 100% es tuyo. Si tu libro se vende por la editorial, recibís el 50% del precio de tapa. Si se vende en una librería externa, también conservás el 50%; el 20% es para la editorial y el 30% para la librería.</p></div></details>
+
+    <details class="faq"><summary>¿Quién define el precio de mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Vos. Como autor intelectual de la obra, fijás el precio de venta y lo podés ajustar cuando quieras desde tu Panel de Autor. Ese precio es el que se usa en todos los canales.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo cobro lo que se vende de mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Las liquidaciones se solicitan desde tu Panel de Autor, y el pago se hace por transferencia a tu CBU. Es la única vía: no se pueden pedir por mail ni por teléfono, ni cobrar en efectivo. Si no la solicitás desde el panel, la editorial no tiene forma de saber que querés cobrar.</p></div></details>
+
+    <details class="faq"><summary>¿En cuánto tiempo me pagan la liquidación?<span class="qmark">+</span></summary><div class="answer"><p>Una vez aprobada, el pago no es inmediato: al ser un proceso manual, suele demorar algunas semanas en acreditarse por transferencia.</p></div></details>
+
+    <details class="faq"><summary>¿Voy a recuperar lo que invertí en publicar?<span class="qmark">+</span></summary><div class="answer"><p>Te lo decimos con honestidad: la edición independiente, vista solo desde lo económico, rara vez recupera su costo solo con la venta de libros. Conviene tomar la publicación como una apuesta profesional y personal más que como un negocio. Dicho esto, hay mucho que podés hacer —difusión, redes, comunidad, presentaciones— para que tu libro llegue a más lectores.</p></div></details>
+  </section>
+
+  <!-- TEMA 6: DISTRIBUCIÓN -->
+  <section class="card faq-section" id="t6">
+    <div class="tema-head">
+      <div class="tema-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M3 7h13l5 5v5h-3M3 7v10h2M16 7v5h5" stroke="#d8730f" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7.5" cy="17" r="2" stroke="#d8730f" stroke-width="1.7"/><circle cx="17.5" cy="17" r="2" stroke="#d8730f" stroke-width="1.7"/></svg></div>
+      <div><div class="tema-eyebrow">Tema 6</div><h2>Distribución y librerías</h2></div>
+    </div>
+    <p class="tema-sub">Cómo llega tu libro a los puntos de venta.</p>
+
+    <details class="faq"><summary>¿Puedo quedarme con todos mis ejemplares?<span class="qmark">+</span></summary><div class="answer"><p>Sí. Sos el dueño de tu obra y podés llevarte todos los ejemplares para venderlos por tu cuenta. No estás obligado a dejar libros en distribución. Todo lo que vendas vos es 100% tuyo.</p></div></details>
+
+    <details class="faq"><summary>¿Dónde se vende mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Tu libro puede venderse por varios canales: la librería web de Dunken, Mercado Libre, Amazon, Buscalibre, librerías físicas y cadenas, la Feria del Libro, y por supuesto tu propia venta directa. El Manual "Tu libro casi está listo" detalla cada canal.</p></div></details>
+
+    <details class="faq"><summary>¿Por qué mi libro tarda en aparecer en las librerías?<span class="qmark">+</span></summary><div class="answer"><p>La distribución es un proceso con varias instancias —listados, pedidos, armado de cajas, envíos a depósitos y sucursales— y cada librería tiene sus propios tiempos. Por eso puede llevar entre 2 y 3 meses. Es normal que demore.</p></div></details>
+
+    <details class="faq"><summary>¿Cuánto dura la consignación de mi libro?<span class="qmark">+</span></summary><div class="answer"><p>La consignación y distribución dura dos años. Pasado ese plazo, si quedan ejemplares en la editorial, te contactamos para que los retires y los sigas comercializando, o para coordinar su donación a bibliotecas populares.</p></div></details>
+
+    <details class="faq"><summary>¿Puedo pedir que mi libro esté en una librería o zona puntual?<span class="qmark">+</span></summary><div class="answer"><p>Sí. Si querés que tu obra esté disponible en una zona específica —tu provincia, tu barrio—, avisale a la editorial y se tiene en cuenta al distribuir. En general se procura dejar ejemplares cerca de donde reside el autor. Lo que no se puede controlar es en qué estante la ubica cada librería.</p></div></details>
+  </section>
+
+  <!-- TEMA 7: DIFUSIÓN Y EVENTOS -->
+  <section class="card faq-section" id="t7">
+    <div class="tema-head">
+      <div class="tema-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M3 10v4h4l8 5V5l-8 5z" stroke="#d8730f" stroke-width="1.7" stroke-linejoin="round"/><path d="M18 8a5 5 0 010 8" stroke="#d8730f" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+      <div><div class="tema-eyebrow">Tema 7</div><h2>Difusión, ferias y eventos</h2></div>
+    </div>
+    <p class="tema-sub">Cómo dar a conocer tu libro y participar de eventos.</p>
+
+    <details class="faq"><summary>¿Qué son los Dunkfluencers y las reseñas?<span class="qmark">+</span></summary><div class="answer"><p>Los Dunkfluencers son lectores y creadores de contenido activos en redes que reseñan los libros de la editorial. Las reseñas son opiniones sobre tu obra que ayudan a difundirla y atraer nuevos lectores. En tu Panel de Autor podés ver si tu libro fue solicitado por algún colaborador.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo organizo la presentación de mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Dunken tiene un salón propio donde podés presentar tu libro ante unas 80 personas, sin costo. Es una linda manera de celebrar tu obra e impulsar la edición. Para coordinar la fecha, contactá al área de presentaciones de la editorial.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo y cuándo me anoto para la Feria del Libro?<span class="qmark">+</span></summary><div class="answer"><p>La inscripción a la Feria del Libro suele gestionarse en el primer trimestre del año. La feria se realiza en La Rural, en general entre fines de abril y comienzos de mayo. El año en que sale tu libro te invitamos a firmar ejemplares en el stand de Dunken; el turno se reserva con anticipación, así que estate atento/a a los avisos por mail y WhatsApp.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo difunde la editorial mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Dunken difunde las novedades por mailing y en redes sociales, donde tiene una comunidad grande. También envía ejemplares a prensa, medios y colaboradores. Aun así, la difusión más efectiva suele ser la del propio autor: mover el libro en tus redes y venderle a tu comunidad es lo que más mueve la aguja.</p></div></details>
+
+    <details class="faq"><summary>¿Puedo hacer publicidad paga para mi libro?<span class="qmark">+</span></summary><div class="answer"><p>Sí. Si te interesa hacer campañas en Meta (Instagram y Facebook) para darle más visibilidad a tu obra, la editorial puede orientarte. Consultá por el área que se ocupa de publicidad.</p></div></details>
+  </section>
+
+  <!-- TEMA 8: PANEL DE AUTOR -->
+  <section class="card faq-section" id="t8">
+    <div class="tema-head">
+      <div class="tema-ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="2" stroke="#d8730f" stroke-width="1.7"/><path d="M9 21h6M12 17v4" stroke="#d8730f" stroke-width="1.7" stroke-linecap="round"/><path d="M7 12l3-3 2 2 4-4" stroke="#d8730f" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+      <div><div class="tema-eyebrow">Tema 8</div><h2>El Panel de Autor</h2></div>
+    </div>
+    <p class="tema-sub">Tu espacio personal para seguir y gestionar tu libro.</p>
+
+    <details class="faq"><summary>¿Qué es el Panel de Autor?<span class="qmark">+</span></summary><div class="answer"><p>Es tu espacio personal dentro de Dunken. Mientras se produce tu libro, te muestra en qué etapa está; cuando ya está impreso, te permite gestionar ventas, liquidaciones, precio y más. Es tu centro de control. El Manual del Panel de Autor lo explica en detalle.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo entro a mi Panel de Autor?<span class="qmark">+</span></summary><div class="answer"><p>Tenés tres formas: escaneando el código QR de tu Orden de Trabajo, pidiéndole el enlace a Gervasio (el asistente de IA de Dunken), o ingresando desde dunken.com.ar en la sección Librería. Si no cambiaste la clave, por defecto es tu correo electrónico.</p></div></details>
+
+    <details class="faq"><summary>¿Quién es Gervasio?<span class="qmark">+</span></summary><div class="answer"><p>Gervasio es el asistente de inteligencia artificial de Dunken. Está conectado a la información de tu libro y de la editorial, así que es la forma más rápida de sacarte una duda sobre el proceso. También puede enviarte el acceso a tu Panel de Autor.</p></div></details>
+
+    <details class="faq"><summary>El panel me muestra cosas distintas que antes, ¿está fallando?<span class="qmark">+</span></summary><div class="answer"><p>No, es así como funciona. El panel es dinámico: cambia según la etapa de tu libro. Mientras está en producción ves el seguimiento; cuando ya está impreso, pasa al modo comercial con ventas y liquidaciones. Si cambió, es porque tu libro avanzó.</p></div></details>
+  </section>
+
+  <!-- SIN RESULTADOS -->
+  <div class="no-results" id="noResults">
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <h3>No encontramos esa pregunta</h3>
+    <p>Probá con otras palabras, o escribinos directamente — te respondemos con gusto.</p>
+  </div>
+
+  <!-- CONTACTO FINAL -->
+  <section class="card contacto-final">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <div class="cf-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v12H8l-4 4z" stroke="#fff" stroke-width="1.9" stroke-linejoin="round"/><path d="M9 9h6M9 12h4" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg></div>
+    <h2>¿No encontraste tu respuesta?</h2>
+    <p>Ninguna duda es de más. Si algo quedó sin responder, escribinos — el equipo de Dunken está para acompañarte en cada paso.</p>
+    <div class="cf-btns">
+      <a class="cf-btn wa" href="https://wa.me/5491138902425" target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9 3 3.5 8.6 3.5 15.5c0 2.4.7 4.7 1.9 6.7L3.3 29l7-1.8c1.9 1 4 1.6 6.2 1.6h.1c6.9 0 12.5-5.6 12.5-12.5C29 8.6 23.4 3 16 3zm0 22.8c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.1 1.1 1.1-4-.3-.4a10.3 10.3 0 01-1.6-5.6c0-5.7 4.7-10.4 10.4-10.4 2.8 0 5.4 1.1 7.3 3a10.3 10.3 0 013 7.4c0 5.7-4.7 10.4-10.4 10.4zm5.7-7.8c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9 0 1.7 1.2 3.4 1.4 3.6.2.2 2.5 3.8 6 5.3 2.2 1 3.1 1 4.2.9.7-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>
+        Escribir por WhatsApp
+      </a>
+      <a class="cf-btn mail" href="mailto:dunkenbelen@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#fff" stroke-width="2"/><path d="M3.5 6l8.5 7 8.5-7" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
+        Escribir por mail
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p class="logo">Editorial Dunken</p>
+  <p>30 años al servicio del autor independiente · Centro de ayuda y preguntas frecuentes</p>
+</footer>
+
+<script>
+  (function(){
+    var search = document.getElementById('search');
+    var clearBtn = document.getElementById('clearBtn');
+    var faqs = document.querySelectorAll('.faq');
+    var sections = document.querySelectorAll('.faq-section');
+    var status = document.getElementById('searchStatus');
+    var noResults = document.getElementById('noResults');
+    var introCard = document.getElementById('introCard');
+    var manualesCard = document.getElementById('manualesCard');
+
+    function norm(s){
+      return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    }
+
+    // Guardar texto original de cada summary
+    faqs.forEach(function(f){
+      var sum = f.querySelector('summary');
+      var qm = sum.querySelector('.qmark');
+      f.dataset.q = sum.childNodes[0].textContent;
+      f.dataset.a = f.querySelector('.answer').textContent;
+    });
+
+    function clearMarks(){
+      faqs.forEach(function(f){
+        var sum = f.querySelector('summary');
+        sum.childNodes[0].textContent = f.dataset.q;
+      });
+    }
+
+    function run(){
+      var q = norm(search.value.trim());
+      clearBtn.classList.toggle('show', search.value.length > 0);
+
+      if(q === ''){
+        clearMarks();
+        faqs.forEach(function(f){ f.classList.remove('hidden'); f.removeAttribute('open'); });
+        sections.forEach(function(s){ s.classList.remove('hidden'); });
+        status.classList.remove('show');
+        noResults.classList.remove('show');
+        introCard.classList.remove('hidden');
+        manualesCard.classList.remove('hidden');
+        return;
+      }
+
+      introCard.classList.add('hidden');
+      manualesCard.classList.add('hidden');
+      var total = 0;
+
+      faqs.forEach(function(f){
+        var hay = norm(f.dataset.q + ' ' + f.dataset.a).indexOf(q) !== -1;
+        f.classList.toggle('hidden', !hay);
+        if(hay){
+          total++;
+          f.setAttribute('open','');
+          // resaltar en el summary
+          var sum = f.querySelector('summary');
+          var orig = f.dataset.q;
+          var idx = norm(orig).indexOf(q);
+          if(idx !== -1){
+            var before = orig.slice(0, idx);
+            var match = orig.slice(idx, idx + q.length);
+            var after = orig.slice(idx + q.length);
+            sum.childNodes[0].textContent = '';
+            var mk = document.createElement('mark');
+            mk.textContent = match;
+            sum.insertBefore(document.createTextNode(after), sum.firstChild);
+            sum.insertBefore(mk, sum.firstChild);
+            sum.insertBefore(document.createTextNode(before), sum.firstChild);
+          }
+        } else {
+          f.removeAttribute('open');
+        }
+      });
+
+      // ocultar secciones sin resultados
+      sections.forEach(function(s){
+        var visibles = s.querySelectorAll('.faq:not(.hidden)').length;
+        s.classList.toggle('hidden', visibles === 0);
+      });
+
+      if(total > 0){
+        status.classList.add('show');
+        status.innerHTML = '<b>' + total + (total === 1 ? ' resultado' : ' resultados') + '</b> para "' + search.value.trim() + '"';
+        noResults.classList.remove('show');
+      } else {
+        status.classList.remove('show');
+        noResults.classList.add('show');
+      }
+    }
+
+    search.addEventListener('input', run);
+    clearBtn.addEventListener('click', function(){
+      search.value = '';
+      search.focus();
+      run();
+    });
+  })();
+</script>
+
+</body>
+</html>
